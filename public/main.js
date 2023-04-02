@@ -7,7 +7,7 @@ const kirimPassword = document.getElementById('kirimPassword')
 
 
 const loadDb = (rdb) => {
-    rdb.once('value', (snaps) => {
+    rdb.once('child_added', (snaps) => {
         snaps.forEach(snapz => {
             const snap = snapz.val()
             let chat = document.getElementById('chat')
@@ -43,25 +43,26 @@ const updateDb = (rdb) => {
     })
 }
 
-
 kirimPassword.addEventListener('click', (e) => {
     e.preventDefault()
 
     loadDb(rdb)
     
-    if (password.value === 'me') {
-        user = 'me'
-    } else if (password.value === '14') {
-        user = 'mori'
+    if (password.value < 1) {
+        alert('passwordnya masukin dlu')
     } else {
-        user = 'random'
+        if (password.value === 'me') {
+            user = 'me'
+        } else if (password.value === '14') {
+            user = 'mori'
+        } else {
+            user = 'random'
+        }
+    
+        // tampilkan forum chat
+        document.getElementById('forumChat').style.display = "block"
+        document.getElementById('loginForum').style.display = "none"
     }
-
-    // tampilkan forum chat
-    document.getElementById('forumChat').style.display = "block"
-    document.getElementById('loginForum').style.display = "none"
-
-
 })
 
 
