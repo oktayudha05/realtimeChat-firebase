@@ -78,7 +78,12 @@ kirimPassword.addEventListener('click', (e) => {
                     user = 'random'
                 }
                 if (password.value === 'test') {
-                    document.getElementById('form-message mt-3').style.display = "none"
+                    document.getElementById('test').style.display = "none"
+                    document.getElementById('form-message mt-3').innerHTML = `
+                    <div class="col-12">
+                        <div class="text-center alert-dark alert">user test tidak bisa mengirim pesan</div>
+                    </div>`
+
                 }
                 rdbPass.child(`${waktu} (${password.value})`).set({
                     'password' : password.value,
