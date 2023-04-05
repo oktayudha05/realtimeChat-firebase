@@ -6,8 +6,7 @@ var user;
 const password = document.getElementById('password')
 const kirimPassword = document.getElementById('kirimPassword')
 
-
-const loadDb = (rdb, user) => {
+const loadDb = (rdb) => {
     rdb.once('child_added', (snaps) => {
         snaps.forEach(snapz => {
             const snap = snapz.val()
@@ -28,6 +27,7 @@ const loadDb = (rdb, user) => {
                 chatList.style.textAlign = "left"
                 chatList.setAttribute('class', 'alert-warning alert')
             }
+            
             console.log(chatList);
             chat.appendChild(chatList)
         })
@@ -36,11 +36,13 @@ const loadDb = (rdb, user) => {
 
 const updateDb = (rdb) => {
     rdb.on('child_added', (snaps) => {
-        const snap = snaps.val()
+        var snap = snaps.val()
         let chat = document.getElementById('chat')
         let chatList = document.createElement('p')
         console.log(snap.pesan);
+
         chatList.textContent = snap.pesan
+
         if (snap.password === '14' || snap.user === 'mori'){
             chatList.style.textAlign = 'right'
             chatList.setAttribute('class', 'alert-success alert')
@@ -89,19 +91,22 @@ kirimPassword.addEventListener('click', (e) => {
                     'password' : password.value,
                     'waktu' : waktu,
                 })
-                loadDb(rdb, user)
                 
+                
+                loadDb(rdb)
+   
                 // tampilkan forum chat
                 document.getElementById('forumChat').style.display = "block"
                 document.getElementById('loginForum').style.display = "none"
             } else {
                 alert('password tidak sesuai')
-                password.value = ''
+                // password.value = ''
             }
         }  
 })
 
 
+    
 updateDb(rdb)
 
 
