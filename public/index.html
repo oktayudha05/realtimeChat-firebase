@@ -14,6 +14,12 @@
         .kanan {
             text-align: right;
         }
+
+        .image {
+            max-width: 200px;
+            max-height: 200px;
+
+        }
     </style>
   </head>
   <body class="bg-warning">
@@ -22,7 +28,10 @@
             <form id="loginForum">
                 <h3 class="text-white">Masukin Passwordnya Dulu</h3>
                 <input id="password" type="text" class="form-control mb-2" name="password" placeholder="udh gabisa pake password bebas">
-                <input id="kirimPassword" type="submit" value="join sekarang" class="btn btn-primary w-100 mt-3">
+                <input id="kirimPassword" type="submit" value="Join Sekarang" class="btn btn-primary w-100 mt-3">
+                <div class="alert alert-danger mt-5" role="alert">
+                    Maap ad sedikit update jdi agak lama dikit loadingnya
+                </div>
             </form>
         </div>
         <div id="forumChat" style="display: none;">
@@ -32,17 +41,25 @@
                     <h5 id="onlineCount" class="text-center"></h5>
                     <div id="message-list" class="mb-2" style="height: 60vh;overflow-y: auto;">
                         <div  class="card">
-                            <div id="chat" class="card-body" ">   
-                            </div>
+                            <div id="chat" class="card-body" "></div>
+                            <div class="card-body kanvas-gambar" style="display: none;"></div>
                         </div>
                     </div>
                     <div id="form-message mt-3" class="mb-2">
-                        <div class="row" id="test">
-                            <div class="col-9">
+                        <div class="row row-cols-2" id="test">
+                            <div class="col-8 float-start">
                                 <input type="text" id="pesan" class="form-control mb-1"></input>
                             </div>
-                            <div class="col-2">
-                                <button id="kirim" class="btn btn-primary">✈</button>
+                            <div class=" col-4">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button id="logoKirimGambar" onclick="pilihGambar()" class="btn btn-primary">📎</button>
+                                        <input type="file" id="kirim-gambar" onchange="sendImage(this)" accept="image/*" style="display: none;"></input>
+                                    </div>
+                                    <div class="col-2">
+                                        <button id="kirim" class="btn btn-primary">✈</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
