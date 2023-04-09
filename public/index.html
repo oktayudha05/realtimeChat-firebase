@@ -12,13 +12,16 @@
 
     <style>
         .kanan {
-            text-align: right;
+            text-align: right !important;
         }
 
         .image {
             max-width: 200px;
             max-height: 200px;
 
+        }
+        .video {
+            max-width: 200px;
         }
     </style>
   </head>
@@ -36,30 +39,46 @@
         </div>
         <div id="forumChat" style="display: none;">
             <center><h1 class="text-white">OMYMA Chat Room</h1></center>
-            <div class="card mt-3">
+            <div class="card border no-border mt-3">
                 <div class="card-body">
                     <h5 id="onlineCount" class="text-center"></h5>
                     <div id="message-list" class="mb-2" style="height: 60vh;overflow-y: auto;">
                         <div  class="card">
-                            <div id="chat" class="card-body" "></div>
+                            <div id="chat" class="card-body">
+
+
+                            </div>
                             <div class="card-body kanvas-gambar" style="display: none;"></div>
                         </div>
                     </div>
                     <div id="form-message mt-3" class="mb-2">
                         <div class="row row-cols-2" id="test">
-                            <div class="col-8 float-start">
+                            <div class="col-8 float-start" style="padding-right: 0px !important;">
                                 <input type="text" id="pesan" class="form-control mb-1"></input>
                             </div>
-                            <div class=" col-4">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <button id="logoKirimGambar" onclick="pilihGambar()" class="btn btn-primary">📎</button>
+                            <div class="col-2 dropup " style="padding-left: 1px !important;">
+                                <div class="dropup text-center">
+                                    <a style="padding-left: 1px !important;" class="btn btn-secondary content-center dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                      📁
+                                    </a>
+                                    <ul class="dropdown-menu bg-primary" style="padding-top: 0px; padding-bottom: 0px;" aria-labelledby="dropdownMenuButton1">
+                                      <li>
+                                        <button id="logoKirimGambar" onclick="pilihGambar()" class="btn btn-primary text-start w-100">🖼 Pilih Gambar</button>
                                         <input type="file" id="kirim-gambar" onchange="sendImage(this)" accept="image/*" style="display: none;"></input>
-                                    </div>
-                                    <div class="col-2">
-                                        <button id="kirim" class="btn btn-primary">✈</button>
-                                    </div>
-                                </div>
+                                      </li>
+                                      <li>
+                                        <button id="logoKirimVideo" onclick="pilihVideo()" class="btn btn-primary text-start w-100">🎥 Pilih Video</button>
+                                        <input type="file" id="kirim-video" onchange="sendVideo(this)" accept="video/*" style="display: none;"></input>
+                                      </li>
+                                      <li>
+                                        <button id="logoKirimAudio" onclick="pilihAudio()" class="btn btn-primary text-start w-100">🎧 Pilih Audio</button>
+                                        <input type="file" id="kirim-audio" onchange="sendImage(this)" accept="audio/*" style="display: none;"></input>
+                                      </li>
+                                    </ul>
+                                  </div>
+                            </div>
+                            <div class="col-2 text-center" style="padding-left: 0px !important;">
+                                <a id="kirim" class="btn btn-primary">✈</a>
                             </div>
                         </div>
                     </div>

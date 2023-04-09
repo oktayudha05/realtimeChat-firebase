@@ -41,44 +41,90 @@ const loadDb = (rdb) => {
 const updateDb = (rdb) => {
     rdb.on('child_added', (snaps) => {
         let snap = snaps.val()
-        //cari turunan snap
         let chat = document.getElementById('chat')
 
-        if (!snap.gambar && snap.password === '14'){
-            let chatList = document.createElement('p')
-            chatList.style.textAlign = 'right'
-            chatList.setAttribute('class', 'alert-success alert')
-            chatList.textContent = snap.pesan
-            chat.appendChild(chatList)
-        } else if (!snap.gambar && snap.password === 'me') {
-            let chatList = document.createElement('p')
-            chatList.style.textAlign = "left"
-            chatList.setAttribute('class', 'alert-primary alert')
-            chatList.textContent = snap.pesan
-            chat.appendChild(chatList)
-        } else if (snap.user === 'random' && !snap.gambar){
-            let chatList = document.createElement('p')
-            chatList.style.textAlign = "left"
-            chatList.setAttribute('class', 'alert-warning alert')
-            chatList.textContent = snap.pesan
-            chat.appendChild(chatList)
-        } 
-        if (snap.gambar) {
-            let chatList = document.createElement('img')
-            chatList.setAttribute('src', `${snap.gambar}`)
-           
-            if (snap.password === '14' || snap.user === 'mori') {
-                chatList.style.textAlign = 'right'
-                chatList.setAttribute('class', 'alert-success alert image d-block')
-            } else if (snap.password === 'me' || snap.user === 'me') {
-                chatList.style.textAlign = "left"
-                chatList.setAttribute('class', 'alert-primary alert image d-block')
-            } else {
-                chatList.style.textAlign = "left"
-                chatList.setAttribute('class', 'alert-warning alert image d-block')
+        if (snap.password === '14') {
+            if (snap.gambar) {
+                let div = document.createElement('div')
+                div.setAttribute('class', 'card text-end border-0 mb-0 p-0')
+                div.innerHTML = `
+                <div class="card-body mb-0 p-0 ">
+                    <image src="${snap.gambar}"class="image alert alert-success mb-15"></image>
+                </div>`
+                chat.appendChild(div)
+            } 
+            else if (snap.video) {
+                let div = document.createElement('div')
+                div.setAttribute('class', 'card text-end border-0 mb-0 p-0')
+                div.innerHTML = `
+                <div class="card-body mb-0 p-0">
+                    <video controls controlsList="nodownload" class="video alert alert-success mb-15">${snap.video}</video>
+                </div>`
+                chat.appendChild(div)
             }
-            console.log(chatList);
-            chat.appendChild(chatList)
+            else {
+                let chatList = document.createElement('p')
+                chatList.style.textAlign = 'right'
+                chatList.setAttribute('class', 'alert-success alert')
+                chatList.textContent = snap.pesan
+                chat.appendChild(chatList)
+            }
+        } 
+        
+        else if (snap.password === 'me') {
+            if (snap.gambar) {
+                let div = document.createElement('div')
+                div.setAttribute('class', 'card border-0 mb-0 p-0')
+                div.innerHTML = `
+                <div class="card-body mb-0 p-0">
+                    <image src="${snap.gambar}"class="image alert alert-primary mb-15"></image>
+                </div>`
+                chat.appendChild(div)
+            } 
+            else if (snap.video) {
+                let div = document.createElement('div')
+                div.setAttribute('class', 'card border-0 mb-0 p-0')
+                div.innerHTML = `
+                <div class="card-body mb-0 p-0">
+                    <video controls controlsList="nodownload" class="video alert alert-primary mb-15">${snap.video}</video>
+                </div>`
+                chat.appendChild(div)
+            }
+            else {
+                let chatList = document.createElement('p')
+                chatList.style.textAlign = "left"
+                chatList.setAttribute('class', 'alert-primary alert')
+                chatList.textContent = snap.pesan
+                chat.appendChild(chatList)
+            }
+        } 
+        
+        else if (snap.user === 'random') {
+            if (snap.gambar) {
+                let div = document.createElement('div')
+                div.setAttribute('class', 'card border-0 mb-0 p-0')
+                div.innerHTML = `
+                <div class="card-body mb-0 p-0">
+                    <image src="${snap.gambar}"class="image alert alert-warning mb-15"></image>
+                </div>`
+                chat.appendChild(div)
+            } 
+            else if (snap.video) {
+                let div = document.createElement('div')
+                div.setAttribute('class', 'card border-0 mb-0 p-0')
+                div.innerHTML = `
+                <div class="card-body mb-0 p-0">
+                    <video controls controlsList="nodownload" class="video alert alert-warning mb-15">${snap.video}</video>
+                </div>`
+                chat.appendChild(div)
+            }
+            else {
+                let chatList = document.createElement('div')
+                chatList.style.textAlign = "left"
+                chatList.setAttribute('class', 'card alert alert-warning')
+                chatList.textContent = snap.pesan
+                chat.appendChild(chatList)
+            }
         }
         console.log('berhasil updateDb');
     })
@@ -167,6 +213,7 @@ kirim.addEventListener('click', e => {
 
 })
 
+//! KIRIM GAMBAR
 const pilihGambar = () => {
     document.getElementById('kirim-gambar').click()
 }
@@ -196,3 +243,44 @@ const sendImage = (e) => {
         }
     }
 } 
+
+
+//! KIRIM VIDEO
+const pilihVideo = () => {
+    document.getElementById('kirim-video').click()
+}
+
+const sendVideo = (e) => {
+    const password = document.getElementById('password')
+    const date = new Date()
+    const chat = document.getElementById('chat')
+    const jam = date.toTimeString().split(' ')[0]
+    const hari = date.toLocaleDateString('en-GB').replace('/', '-').replace('/', '-');
+    const waktu = `${hari} ${jam}`
+    let file = e.files[0]
+    if(!file.type.match('video.*')) {
+        alert('pilih video yg bener')
+    } else {
+        let reader = new FileReader()
+        reader.addEventListener('load', () => {
+            rdb.child(`${waktu} (${password.value})`).set({
+            'password' : password.value, 
+            'user' : user,
+            'type' : 'video',
+            'video': `<source src="${reader.result}" type="video/mp4"></source>`
+            });
+        }, false);
+        if (file) {
+            reader.readAsDataURL(file)
+        }
+    }
+} 
+
+const pilihAudio = () => {
+    alert('blm jadi fitur yg ini')
+    // document.getElementById('kirim-video').click()
+}
+
+const sendAudio = (e) => {
+    alert('blm jadi fitur yg iniii')
+}
