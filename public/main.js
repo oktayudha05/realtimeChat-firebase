@@ -15,7 +15,7 @@ const loadDb = (rdb) => {
             let chatList 
             console.log(snap.user);
             chatList.textContent = snap.gambar
-            if (snap.user === 'mori'){
+            if (snap.user === 'nabe'){
                 chatList = document.createElement('p')
                 chatList.style.textAlign = 'right'
                 chatList.setAttribute('class', 'alert-success alert')
@@ -43,7 +43,7 @@ const updateDb = (rdb) => {
         let snap = snaps.val()
         let chat = document.getElementById('chat')
 
-        if (snap.password === '14' || snap.password === 'mori') {
+        if (snap.password === '14' || snap.password === 'nabe') {
             if (snap.gambar) {
                 let div = document.createElement('div')
                 div.setAttribute('class', 'card text-end border-0 mb-0 p-0')
@@ -141,11 +141,11 @@ kirimPassword.addEventListener('click', (e) => {
     if (password.value < 1) {
             alert('passwordnya masukin dlu')
         } else {
-            if (password.value === 'mori' || password.value === 'me' || password.value === 'test' || password.value === 'developer') {
+            if (password.value === 'nabe' || password.value === 'me' || password.value === 'test' || password.value === 'developer') {
                 if (password.value === 'me') {
                     user = 'me'
-                } else if (password.value === 'mori') {
-                    user = 'mori'
+                } else if (password.value === 'nabe') {
+                    user = 'nabe'
                 } else {
                     user = 'random'
                 }
